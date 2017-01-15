@@ -4,6 +4,11 @@
     background-color:lightcoral
 }
 
+.embedded-style {
+    color:black;
+    background-color:lightcoral;
+}
+
 label {
     display: inline-block; /* Align labels */
     width: 100px;
@@ -13,4 +18,17 @@ label {
 /* to center an inline element */
 .text-center {
    text-align:center
+}
+
+/* Fixed width and height for tables */
+tbody {
+    height:300px;
+    width:500px;
+    display:block;
+    overflow:auto;
+}
+thead, tbody tr {
+    display:table;
+    width:100%;
+    table-layout:fixed;
 }
