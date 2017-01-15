@@ -1,0 +1,16 @@
+
+.body-style {
+    color:crimson;
+    background-color:lightcoral
+}
+
+label {
+    display: inline-block; /* Align labels */
+    width: 100px;
+    text-align: right;
+}
+
+/* to center an inline element */
+.text-center {
+   text-align:center
+}
