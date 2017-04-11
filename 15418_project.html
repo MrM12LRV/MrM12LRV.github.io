@@ -34,16 +34,15 @@
   <p> I may use other sources in order to implement the other conservative dependence testers, but I am not sure what those are yet. </p>
 
 
-<h1> GOALS AND DELIVERABLES </h1>
-Describe the deliverables or goals of your project.
+<h1> Goals and Deliverables </h1>
 
-This is by far the most important section of the proposal:
+  <h3> Plan to Achieve </h3>
 
-Separate your goals into what you PLAN TO ACHIEVE (what you believe you must get done to have a successful project and get the grade you expect) and an extra goal or two that you HOPE TO ACHIEVE if the project goes really well and you get ahead of schedule. It may not be possible to state precise performance goals at this time, but we encourage you be as precise as possible. If you do state a goal, give some justification of why you think you can achieve it. (e.g., I hope to speed up my starter code 10x, because if I did it would run in real-time.)
+  I plan to achieve a project that will analyze any given Python program for loops that are parallelizable.  First, it will perform array dependence analysis on the program to determine which loops are parallelizable -- possibly splitting the loops if some computations are dependence on other iterations while other computations are not.  We will get information about the analysis that was performed, which loops were parallelized and why, and how long the analysis took.  It will annotate the input Python source code with Cython if the loop is parallelizable.  These annotations will include both vector instrinsics and OpenMP.  Then, Cython will compile this output to a library binary, which can then be run and we can get speedup performance information from it.
 
-  <h3> Plan to achieve </h3>
+  <h3> Hope to Achieve </h3>
 
-  I plan to achieve a project that will analyze any given Python program for loops that are parallelizable.  It will annotate the input Python source code with Cython 
+  <p> In addition to the above, it would be cool to support multiple types of vector instrinsics and be platform independent.  Also, it would be great to compare multiple depedence testers to see how long each one takes, and to see how many loops and which loops each one identifies as parallelizable.  Ideally, it would be very cool to have my analysis combine the dependence testers in ways for ideal compile-time and loop parallelization checking. </p>
 
   <h3> Metrics </h3>
 
@@ -61,5 +60,7 @@ Separate your goals into what you PLAN TO ACHIEVE (what you believe you must get
   <p> The 8 cores, two way hyperthreaded GHC machines should be good enough for interesting test results.  Python is a neat language to choose because it is so widely used.  The Cython compiler is needed in order to annotate the Python code with vector intrinsics and OpenMP.  Python's original implementation, CPython, just runs Python bytecode, which is slow and does not support vector instructions.  OpenMP provides an easy way to source-code-annotate a loop to be run in parallel. </p>
 
 <h1> Schedule </h1>
+
+
 Produce a schedule for your project. Your schedule should have at least one item to do per week. List what you plan to get done each week from now until the parallelism competition in order to meet your project goals. Keep in mind that due to other classes, you'll have more time to work some weeks than others (work that into the schedule). You will need to re-evaluate your progress at the end of each week and update this schedule accordingly. Note the intermediate checkpoint deadline is April 25th. In your schedule we encourage you to be precise as precise as possible. It's often helpful to work backward in time from your deliverables and goals, writing down all the little things you'll need to do (establish the dependencies!).
 
