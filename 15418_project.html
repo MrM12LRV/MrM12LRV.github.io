@@ -1,107 +1,36 @@
-<!DOCTYPE html>
-<html>
-<title>W3.CSS</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="/lib/w3-theme-deep-purple.css">
-<body>
 
-<div class="w3-card-4">
-<div class="w3-container w3-theme w3-card-2">
-  <h1> TITLE </h1>
-  <h2> Cython Automatic Loop Parallelization </h2>
-  <h2> Joey Fernau                           </h2>
-</div>
+<h1> Title </h1>
+<h2> Python Automatic Loop Parallelization </h2>
+<h2> Joey Fernau                           </h2>
 
-<div class="w3-container w3-text-theme">
-<h2>w3-text-theme</h2></div>
-
-<h1> SUMMARY </h1>
-Summarize your project in no more than 2-3 sentences. Describe what you plan to do and what parallel systems you will be working with. Example one-liners include (you should add a bit more detail):
-
-I'm going to implement dependence testing for Cython, a typed superset of Python that compiles to C, in order to perform automatic loop parallelization.  The parallel systems include C++ vector instrinsics (available from Cython's native C++ calls) and/or OpenMP; the testing will be run on CPUs and/or GPUs.
-
-<ul class="w3-ul w3-border-top">
-  <li class="w3-theme-l5">
-  <a class="w3-button w3-xlarge w3-circle w3-theme-action"
-  style="position:fixed;top:48px;right:24px;">+</a>
-  <p>w3-theme-l5 (w3-theme-light)</p>
-  </li>
-  <li class="w3-theme-l4">
-    <p>w3-theme-l4</p>
-  </li>
-  <li class="w3-theme-l3">
-    <p>w3-theme-l3</p>
-  </li>
-  <li class="w3-theme-l2">
-    <p>w3-theme-l2</p>
-  </li>
-  <li class="w3-theme-l1">
-    <p>w3-theme-l1</p>
-  </li>
-  <li class="w3-theme">
-    <p>w3-theme</p>
-  </li>
-  <li class="w3-theme-d1">
-    <p>w3-theme-d1</p>
-  </li>
-  <li class="w3-theme-d2">
-    <p>w3-theme-d2</p>
-  </li>
-  <li class="w3-theme-d3">
-    <p>w3-theme-d3</p>
-  </li>
-  <li class="w3-theme-d4">
-    <p>w3-theme-d4</p>
-  </li>
-  <li class="w3-theme-d5">
-    <p>w3-theme-d5 (w3-theme-dark)</p>
-  </li>
-</ul>
-</div>
-
-</body>
-</html>
-
-
-
-
+<h1> Summary </h1>
+  I'm going to implement dependence testing for Python by utilzing the functionality provided by Cython, a typed superset of Python that compiles to C, in order to perform automatic loop parallelization.  The parallel systems include C vector instrinsics (available from Cython's native C calls) and/or OpenMP; the testing will be run on CPUs and/or GPUs.
 
 <h1> BACKGROUND </h1>
-If your project involves accelerating a compute-intensive application, describe the application or piece of the application you are going to implement in more detail. This description need only be a few paragraphs. It might be helpful to include a block diagram or pseudocode of the basic idea. An important detail is what aspects of the problem might benefit from parallelism? and why?
 
-  Python is known to suffer from performance issues; <a href="http://cython.org/"> Cython </a> is an optimizing static compiler for both Python and Cython. This project will be able to take any valid Python program, analyze its abstract syntax tree using the <a href="https://docs.python.org/2/library/ast.html"> ast module </a> by performing <a href="https://en.wikipedia.org/wiki/Loop_dependence_analysis"> Array Dependence Analysis </a> in order to determine if a loop can be parallelized.  Cython can be converted into LLVM's IR, so we can also perform analysis on this representation if Python's ast library does not prove to be sufficient for this project.
-  <br/>
+  <p> Python is known to suffer from performance issues; <a href="http://cython.org/"> Cython </a> is an optimizing static compiler for both Python and Cython. This project will be able to take any valid Python program, analyze its abstract syntax tree using the <a href="https://docs.python.org/2/library/ast.html"> ast module </a> by performing <a href="https://en.wikipedia.org/wiki/Loop_dependence_analysis"> Array Dependence Analysis </a> in order to determine if a loop can be parallelized.  Cython can be converted into LLVM's IR (because it compiles to C), so we can also perform analysis on this representation if Python's ast library does not prove to be sufficient for this project.  The main reason for using the Cython compiler (as opposed to the Python's original implementation: CPython) is so that once we determine if a loop can be parallelized, we can source-code-annotate the input Python program with Cython C vector instrinics and other parallizing techniques such as OpenMP.
+  </p>
 
-  The process of determining this type of dependence is called dependence testing.  There are many types of dependence testers, such as Lamport's Test, the GCD test, Banerjee's Inequalities, the Power Test, the I-Test, the Omega Test, the Delta Test, the Stanford Test, and so on...  Some are
-  less computationally expensive, but are more conservative approximations and thus may not be able to detect independence of all parallelizable loops.
-
-
+  <p> The process of determining this type of dependence is called dependence testing.  There are many types of dependence testers, such as Lamport's Test, the GCD test, Banerjee's Inequalities, the Power Test, the I-Test, the Omega Test, the Delta Test, the Stanford Test, and so on.  Some are less computationally expensive, but are more conservative approximations and thus may not be able to detect independence of all parallelizable loops. </p>
 
 <h1> THE CHALLENGE </h1>
-Describe why the problem is challenging. What aspects of the problem might make it difficult to parallelize? In other words, what to you hope to learn by doing the project?
+  <p> This problem is challenging because of the nature of the problem -- automatically inferring if a loop has independent iterations reduces down to solving an integer linear program, which is NP-hard.  Thus, we must make conservative estimates.  It will be very cool to do program analysis with the end result of automatic parallelization.  This is a neat field to study, and mythical automatic parallizing compiler is one beast researchers are hunting for. </p>
 
-  This problem is challenging because of the nature of the problem -- automatically inferring if a loop has independent iterations reduces down to solving an integer linear program, which is NP-hard.  Thus, we must make conservative estimates.  It will be very cool to do program analysis with the end result of automatic parallelization.  This is a neat field to study, and mythical automatic parallizing compiler is one beast researchers are hunting for.
-  <br/>
+  <p> I interesting to see how well the different dependence testers fair with respect to determining if a loop is parallelizable.  To make my implementation more practical and efficient, maybe a combination of the brute force ILP solver in combination with a conservative dependence tester would be the best method depending on how complex a given loop grouping is. Also, learning new optimization techniques for a compiler is fun. </p>
 
-  I interesting to see how well the different dependence testers fair with respect to determining if a loop is parallelizable.
-  <br/>
-
-  The workload of this project is any given Python program.  Some programs are more difficult to analyze than others.  For example, a quadruply nested for loop with hundreds of iterations per loop would be a difficult integer linear program to solve.  Thus, the conservative estimates may not
-  be able to determine that the loop is parallelizable.
+  <p> The workload of this project is any given Python program.  Some programs are more difficult to analyze than others.  For example, a quadruply nested for loop with hundreds of iterations per loop would be a difficult integer linear program to solve.  Thus, the conservative estimates may not be able to determine that the loop is parallelizable. </p>
 
 <h1> RESOURCES </h1>
-Describe the resources (type of computers, starter code, etc.) you will use. What code base will you start from? Are you starting from scratch or using an existing piece of code? Is there a book or paper that you are using as a reference (if so, provide a citation)? Are there any other resources you need, but haven't figured out how to obtain yet? Could you benefit from access to any special machines?
 
-I will be using Python 2.7, Cython, Python's ast library, LLVM (possibly), C/C++.  Other than that, I will be starting from scratch.  The machines I will be using will be the GHC machines since they are mulicore.  I may potentially benefit from a machine with more cores to have neater test results, but I do not find that completely necessary.
+  <p> I will be using Python 2.7, Cython, Python's ast library, LLVM (possibly), C/C++.  Other than that, I will be starting from scratch.  The machines I will be using will be the GHC machines since they are mulicore.  I may potentially benefit from a machine with more cores to have neater test results, but I do not find that completely necessary. </p>
 
-To learn about Array Dependence Analysis am using the Purple Dragon Book: <br/>
-Alfred V. Aho, Monica S. Lam, Ravi Sethi, and Jeffrey D. Ullman.
-Compilers: Principles, Techniques, and Tools (2nd Edition).
-Pearson Addison Wesley, 2006. ISBN: 978-0321486814.
-<br/>
+  <p> To learn about Array Dependence Analysis am using the Purple Dragon Book: <br/>
+  Alfred V. Aho, Monica S. Lam, Ravi Sethi, and Jeffrey D. Ullman.
+  Compilers: Principles, Techniques, and Tools (2nd Edition).
+  Pearson Addison Wesley, 2006. ISBN: 978-0321486814.
+  </p>
 
-I may use other sources in order to implement the other conservative dependence testers, but I am not sure what those are yet.
+  <p> I may use other sources in order to implement the other conservative dependence testers, but I am not sure what those are yet. </p>
 
 
 <h1> GOALS AND DELIVERABLES </h1>
