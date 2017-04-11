@@ -12,7 +12,7 @@
 
 <h1> Background </h1>
 
-  <p> Python is known to suffer from performance issues; <a href="http://cython.org/"> Cython </a> is an optimizing static compiler for both Python and Cython. This project will be able to take any valid Python program, analyze its abstract syntax tree using the <a href="https://docs.python.org/2/library/ast.html"> ast module </a> by performing <a href="https://en.wikipedia.org/wiki/Loop_dependence_analysis"> Array Dependence Analysis </a> in order to determine if a loop can be parallelized.  Cython can be converted into LLVM's IR (because it compiles to C), so we can also perform analysis on this representation if Python's ast library does not prove to be sufficient for this project.  The main reason for using the Cython compiler (as opposed to the Python's original implementation: CPython) is so that once we determine if a loop can be parallelized, we can source-code-annotate the input Python program with Cython C vector instrinics and other parallizing techniques such as OpenMP (<a href="http://cython.readthedocs.io/en/latest/src/userguide/parallelism.html"> Cython Parallelism </a>).
+  <p> Python is known to suffer from performance issues; <a href="http://cython.org/"> Cython </a> is an optimizing static compiler for both Python and Cython. This project will be able to take any valid Python program, analyze its abstract syntax tree using the <a href="https://docs.python.org/2/library/ast.html"> ast module </a> by performing <a href="https://en.wikipedia.org/wiki/Loop_dependence_analysis"> Array Dependence Analysis </a> in order to determine if a loop can be parallelized.  Cython can be converted into LLVM's IR (because it compiles to C), so we can also perform analysis on this representation if Python's ast library does not prove to be sufficient for this project.  The main reason for using the Cython compiler (as opposed to the Python's original implementation: CPython) is so that once we determine if a loop can be parallelized, we can source-code-annotate the input Python program with Cython C vector instrinics and other parallizing techniques such as OpenMP (<a href="http://cython.readthedocs.io/en/latest/src/userguide/parallelism.html">Cython Parallelism</a>).
   </p>
 
   <p> The process of determining this type of dependence is called dependence testing.  There are many types of dependence testers, such as Lamport's Test, the GCD test, Banerjee's Inequalities, the Power Test, the I-Test, the Omega Test, the Delta Test, the Stanford Test, and so on.  Some are less computationally expensive, but are more conservative approximations and thus may not be able to detect independence of all parallelizable loops. </p>
@@ -56,7 +56,7 @@
   <p> A more important metric to measure though for this project is a bit different than a performance though.  We should measure, in some way, how many loops were able to be determined to be independent.  It seems difficult to determine how many loops, and which loops I should be able to determine to be parallelizable.  I will ideally parallelize all loops that have independent iterations, but this will probably not be the case.  Also, it will be nice to have low analysis times.  I will be comparing analysis times with how many loops were able to be parallelized, which should be interesting.  This will all me to see the effectiveness of different dependence testers, including the one that is NP-hard (if the test can finish in a reasonable amount of time). </p>
 
   <h3> Demo </h3>
-  
+
   <p> My demo will showing how my program automatically annotating a given Python program with the Cython superset and the resulting assembly compared with the baseline program.  It will also show which loops were able to be parallelized and why, and which loops were not able to be parallelized and why.  I will show that my program was able to automatically deduce that some loops were able to be parallizable and some loops were not able to be parallelizable.  It could be interactive!  Maybe I can have the class write a quick program together with a loop, then my program will analyze it and report speedups. </p>
 
 
@@ -70,7 +70,7 @@
 
   <tr>
     <th>Week Of</th>
-    <th>Todo</th> 
+    <th>Todo</th>
   </tr>
 
   <tr>
@@ -79,7 +79,7 @@
   </tr>
 
   <tr>
-    <td> Apr 17 </td> 
+    <td> Apr 17 </td>
     <td> Perform array dependence analysis on Python AST to determine if a given loop is parallelizable.  Then annotate the Python source with Cython.  Only implement one array dependence analysis, probably the brute force one. </td>
   </tr>
 
