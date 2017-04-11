@@ -12,6 +12,8 @@
 
   <p> The process of determining this type of dependence is called dependence testing.  There are many types of dependence testers, such as Lamport's Test, the GCD test, Banerjee's Inequalities, the Power Test, the I-Test, the Omega Test, the Delta Test, the Stanford Test, and so on.  Some are less computationally expensive, but are more conservative approximations and thus may not be able to detect independence of all parallelizable loops. </p>
 
+  <p> Cython always one to add static typing to a Python program, but this project's inputs are valid Python programs.  Even though adding this static typing will speed up the program on its own, the input program will no longer be a valid Python program.  It will be a valid Cython program.  Our inputs are only valid Python programs.  This project will source-code-annotate a Python program, effectively converting it to a Cython program, compile it with Cython, and output a library binary.
+
 <h1> Challenge </h1>
   <p> This problem is challenging because of the nature of the problem -- automatically inferring if a loop has independent iterations reduces down to solving an integer linear program, which is NP-hard.  Thus, we must make conservative estimates.  It will be very cool to do program analysis with the end result of automatic parallelization.  This is a neat field to study, and mythical automatic parallizing compiler is one beast researchers are hunting for. </p>
 
@@ -38,10 +40,21 @@ Describe the deliverables or goals of your project.
 This is by far the most important section of the proposal:
 
 Separate your goals into what you PLAN TO ACHIEVE (what you believe you must get done to have a successful project and get the grade you expect) and an extra goal or two that you HOPE TO ACHIEVE if the project goes really well and you get ahead of schedule. It may not be possible to state precise performance goals at this time, but we encourage you be as precise as possible. If you do state a goal, give some justification of why you think you can achieve it. (e.g., I hope to speed up my starter code 10x, because if I did it would run in real-time.)
-If applicable, describe the demo you plan to show at the parallelism computation (will it be an interactive demo? will you show an output of the program that is really neat? will you show speedup graphs?). Specifically, what will you show us that will demonstrate you did a good job?
-If your project is an analysis project, what are you hoping to learn about the workload or system being studied? What question(s) do you plan to answer in your analysis?
-Systems project proposals should describe what the system will be capable of and what performance is hoped to be achieved.
-IN GENERAL: Imagine that I didn't give you a grading script on assignments 2, 3, or 4. Imagine you did the entire assignment, made it as fast as you could, and then turned it in. You wouldn't have any idea if you'd done a good job!!! That's the situation you are in for the final project. And that's the situation I'm in when grading your final project. As part of your project plan, and ONE OF THE FIRST THINGS YOU SHOULD DO WHEN YOU GET STARTED WORKING is implement the test harnesses and/or baseline "reference" implementations for your project. Then, for the rest of your project you always have the ability to run your optimized code and obtain a comparison.
+
+  <h3> Plan to achieve </h3>
+
+  I plan to achieve a project that will analyze any given Python program for loops that are parallelizable.  It will annotate the input Python source code with Cython 
+
+  <h3> Metrics </h3>
+
+  <p> This project is mainly an analysis project, Once the analysis is over we have a bit of a systems project because we will be measuring performance of the annotated and vectorized loops that were deemed independent.  One performance metric will be measured by comparing the baseline with parallelized versions of the Python program.  This is important: the baseline is the valid <b> Python </b> program (i.e. not annotated with any Cython).  If the baseline is annoated with Cython's syntax, then it may be faster but not by means of this project.  We only want to be measuring the performance increased of adding the parallization to the loops.  We should be getting a 16x ideal speedup on our 2 way hyperthreaded 8 core CPU, but it will probably be closer to 8x (and even less if most of the program is not parallelizable loops). </p>
+
+  <p> A more important metric to measure though for this project is a bit different than a performance though.  We should measure, in some way, how many loops were able to be determined to be independent.  It seems difficult to determine how many loops, and which loops I should be able to determine to be parallelizable.  I will ideally parallelize all loops that have independent iterations, but this will probably not be the case.  Also, it will be nice to have low analysis times.  I will be comparing analysis times with how many loops were able to be parallelized, which should be interesting.  This will all me to see the effectiveness of different dependence testers, including the one that is NP-hard (if the test can finish in a reasonable amount of time). </p>
+
+  <h3> Demo </h3>
+  
+  <p> My demo will showing how my program automatically annotating a given Python program with the Cython superset and the resulting assembly compared with the baseline program.  It will also show which loops were able to be parallelized and why, and which loops were not able to be parallelized and why.  I will show that my program was able to automatically deduce that some loops were able to be parallizable and some loops were not able to be parallelizable.  It could be interactive!  Maybe I can have the class write a quick program together with a loop, then my program will analyze it and report speedups. </p>
+
 
 <h1> Platform Choice </h1>
 
