@@ -1,4 +1,9 @@
 
+<!DOCTYPE html>
+<html>
+<title> Python Automatic Loop Parallelization </title>
+<body>
+
 <h1> Python Automatic Loop Parallelization </h1>
 <h2> Joey Fernau                           </h2>
 
@@ -12,7 +17,7 @@
 
   <p> The process of determining this type of dependence is called dependence testing.  There are many types of dependence testers, such as Lamport's Test, the GCD test, Banerjee's Inequalities, the Power Test, the I-Test, the Omega Test, the Delta Test, the Stanford Test, and so on.  Some are less computationally expensive, but are more conservative approximations and thus may not be able to detect independence of all parallelizable loops. </p>
 
-  <p> Cython always one to add static typing to a Python program, but this project's inputs are valid Python programs.  Even though adding this static typing will speed up the program on its own, the input program will no longer be a valid Python program.  It will be a valid Cython program.  Our inputs are only valid Python programs.  This project will source-code-annotate a Python program, effectively converting it to a Cython program, compile it with Cython, and output a library binary.
+  <p> Cython always one to add static typing to a Python program, but this project's inputs are valid Python programs.  Even though adding this static typing will speed up the program on its own, the input program will no longer be a valid Python program.  It will be a valid Cython program.  Our inputs are only valid Python programs.  This project will source-code-annotate a Python program, effectively converting it to a Cython program, compile it with Cython, and output a library binary. </p>
 
 <h1> Challenge </h1>
   <p> This problem is challenging because of the nature of the problem -- automatically inferring if a loop has independent iterations reduces down to solving an integer linear program, which is NP-hard.  Thus, we must make conservative estimates.  It will be very cool to do program analysis with the end result of automatic parallelization.  This is a neat field to study, and mythical automatic parallizing compiler is one beast researchers are hunting for. </p>
@@ -38,7 +43,7 @@
 
   <h3> Plan to Achieve </h3>
 
-  I plan to achieve a project that will analyze any given Python program for loops that are parallelizable.  First, it will perform array dependence analysis on the program to determine which loops are parallelizable -- possibly splitting the loops if some computations are dependence on other iterations while other computations are not.  We will get information about the analysis that was performed, which loops were parallelized and why, and how long the analysis took.  It will annotate the input Python source code with Cython if the loop is parallelizable.  These annotations will include both vector instrinsics and OpenMP.  Then, Cython will compile this output to a library binary, which can then be run and we can get speedup performance information from it.
+  <p> I plan to achieve a project that will analyze any given Python program for loops that are parallelizable.  First, it will perform array dependence analysis on the program to determine which loops are parallelizable -- possibly splitting the loops if some computations are dependence on other iterations while other computations are not.  We will get information about the analysis that was performed, which loops were parallelized and why, and how long the analysis took.  It will annotate the input Python source code with Cython if the loop is parallelizable.  These annotations will include both vector instrinsics and OpenMP.  Then, Cython will compile this output to a library binary, which can then be run and we can get speedup performance information from it. </p>
 
   <h3> Hope to Achieve </h3>
 
@@ -61,6 +66,40 @@
 
 <h1> Schedule </h1>
 
+<table style="width:100%">
 
-Produce a schedule for your project. Your schedule should have at least one item to do per week. List what you plan to get done each week from now until the parallelism competition in order to meet your project goals. Keep in mind that due to other classes, you'll have more time to work some weeks than others (work that into the schedule). You will need to re-evaluate your progress at the end of each week and update this schedule accordingly. Note the intermediate checkpoint deadline is April 25th. In your schedule we encourage you to be precise as precise as possible. It's often helpful to work backward in time from your deliverables and goals, writing down all the little things you'll need to do (establish the dependencies!).
+  <tr>
+    <th>Week Of</th>
+    <th>Todo</th> 
+  </tr>
+
+  <tr>
+    <td> Apr 10 </td>
+    <td> Create tests for my program.  Some tests with complicated loop structures and other tests with simple loop structures.  Find general Python test suite also.  Create general code structure of my optimization pass, such as how to read the Python ast and how to annotate the Cython code. </td>
+  </tr>
+
+  <tr>
+    <td> Apr 17 </td> 
+    <td> Perform array dependence analysis on Python AST to determine if a given loop is parallelizable.  Then annotate the Python source with Cython.  Only implement one array dependence analysis, probably the brute force one. </td>
+  </tr>
+
+  <tr>
+    <td> Apr 24 </td>
+    <td> Finish project checkpoint due on Tuesday, April 25th. Use other dependence testers to conservatively estimate loops that are more difficult to analyze.  </td>
+  </tr>
+
+  <tr>
+    <td> May 1  </td>
+    <td> Work on tradeoffs between the different dependence testers.  Some may take too long to perform an analysis with while others may be too conservative.  Maybe find a way to selectively choose which tester to use depending on the complexity of the loop.  </td>
+  </tr>
+
+  <tr>
+    <td> May 8  </td>
+    <td> Get final results.  Work on and finish project presentation and writeup by Friday, May 12th. </td>
+  </tr>
+
+</table>
+
+</body>
+</html>
 
