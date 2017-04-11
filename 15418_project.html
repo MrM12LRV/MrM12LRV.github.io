@@ -2,8 +2,13 @@
 <h1> TITLE </h1>
 Please provide the title of your project, followed by the names of all team members. Teams may include up to two students. There are no exceptions to this rule.
 
+Autolooppycyllelization
+Joey Fernau
+
 <h1> SUMMARY </h1>
 Summarize your project in no more than 2-3 sentences. Describe what you plan to do and what parallel systems you will be working with. Example one-liners include (you should add a bit more detail):
+
+I'm going to implement dependence testing for Cython, a typed superset of Python, in order to perform automatic loop parallelization.  The parallel systems include C++ vector instrinsics (available from Cython's native C++ calls) and/or OpenMP.
 
 We are going to implement an optimized Smoothed Particle Hydrodynamics fluid solver on the NVIDIA GPUs in the lab.
 We are going port the Go runtime to Blacklight.
@@ -13,6 +18,10 @@ We are going to implement two possible algorithms for a real-time computer visio
 
 <h1> BACKGROUND </h1>
 If your project involves accelerating a compute-intensive application, describe the application or piece of the application you are going to implement in more detail. This description need only be a few paragraphs. It might be helpful to include a block diagram or pseudocode of the basic idea. An important detail is what aspects of the problem might benefit from parallelism? and why?
+
+Python is known to suffer from performance issues; Cython combines C and Python to combine the s
+
+Cython compiles to C code.  This can be converted into LLVM's intermediate IR in order to perform static analysis on the code to find dependencies between loop iterations.
 
 <h1> THE CHALLENGE </h1>
 Describe why the problem is challenging. What aspects of the problem might make it difficult to parallelize? In other words, what to you hope to learn by doing the project?
