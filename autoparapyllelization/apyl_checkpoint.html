@@ -9,6 +9,8 @@
 
 <h1> Checkpoint </h1>
 
+<a href="https://github.com/joeyfernau/autoparapyllelization"> Code </a>
+
 <h1> Revised Schedule </h1>
 
 <table style="width:100%">
@@ -17,29 +19,28 @@
     <th>Week Of</th>
     <th>Todo</th>
   </tr>
-
   <tr>
     <td> Apr 10 </td>
-    <td> Create tests for my program.  Some tests with complicated loop structures and other tests with simple loop structures.  Find general Python test suite also.  Create general code structure of my optimization pass, such as how to read the Python ast and how to annotate the    Cython code. </td>
+    <td> Create tests for my program.  Some tests with complicated loop structures and other tests with simple loop structures.  Find general Python test suite also.  Create general code structure of my optimization pass, such as how to read the Python ast and how to annotate the Cython code. </td>
   </tr>
 
   <tr>
     <td> Apr 17 </td>
-    <td> Perform array dependence analysis on Python AST to determine if a given loop is parallelizable.  Then annotate the Python source     with Cython.  Only implement one array dependence analysis, probably the brute force one. </td>
+    <td> Perform array dependence analysis on Python AST to determine if a given loop is parallelizable for singly nested loops</td>
   </tr>
 
   <tr>
     <td> Apr 24 </td>
-    <td> Finish project checkpoint due on Tuesday, April 25th. Use other dependence testers to conservatively estimate loops that are more    difficult to analyze.  </td>
+    <td> Finish project checkpoint due on Tuesday, April 25th. Use other dependence testers to conservatively estimate loops that are more difficult to analyze.  </td>
   </tr>
   <tr>
     <td> Apr 26-29 </td>
-    <td> Implement array dependence analysis for nested loops. </td>
+    <td> Implement array dependence analysis for nested loops. Then annotate the Python source with Cython.  Only implement one array dependence analysis, probably the brute force one. </td>
   </tr>
 
   <tr>
     <td> Apr 30-03 </td>
-    <td> Implement array dependence analysis for loops with multiple arrays in them.  Use other dependence testers to conservatively estimate loops that are more difficult to analyze. </td>
+    <td> Implement array dependence analysis for loops with multiple arrays in them.  Use other dependence testers to conservatively estimate loops that are more difficult to analyze. Add support for another set of vector instrinsics.  </td>
   </tr>
 
   <tr>
@@ -49,7 +50,7 @@
 
   <tr>
     <td> May 07-10 </td>
-    <td> Get final results.  Work on and finish project page by Wednesday, May 10th. </td>
+    <td> Possibly add support for more Python constructs.  Get final results.  Work on and finish project page by Wednesday, May 10th. </td>
   </tr>
 
   <tr>
@@ -61,37 +62,55 @@
 
 <h1> Summarized Work-so-far </h1>
 
-The ast Python module was learned.  For any singly nested loop, with a single Subscript (i.e. an array or a list), the loop can be determined if it can be parallelized.  The data dependencies of the array accesses are determined using integer linear programming (ILP).
-
-For a simple case, if we have the loop
-<pre>
-A = [None]*10
-for i in range(10):
-  A[i] = A[i-1]
-</pre>
-Then use ILP to determine if there exists integers <code> i, i' </code> such that <code> 0 &lt;= i &lt; 10 </code>, <code> 0 &lt;= i' &lt; 10 </code>, and <code> i-1=i' </code>
-
-<h1> Goals and Deliverables Update </h1>
-Describe how you are doing with respect to the goals and deliverables stated in your proposal. Do you still believe you will be able to produce all your deliverables? If not, why? What about the "nice to haves"? In your checkpoint writeup we want a new list of goals that you plan to hit for the Parallelism competition.
-
-  <h3> Plan to Achieve </h3>
-
-  <p> I plan to achieve a project that will analyze any given Python program for loops that are parallelizable.  First, it will perform array dependence analysis on the program to determine which loops are parallelizable -- possibly splitting the loops if some computations are dependent on other iterations while other computations are not.  We will get information about the analysis that was performed, which loops were parallelized and why, and how long the analysis took.  It will annotate the input Python source code with Cython if the loop is parallelizable.  These annotations will include both vector instrinsics and OpenMP.  Then, Cython will compile this output to a library binary, which can then be run and we can get speedup performance information from it. </p>
-
-  <h3> Hope to Achieve </h3>
-
-  <p> In addition to the above, it would be cool to support multiple types of vector instrinsics and be platform independent.  Also, it would be great to compare multiple depedence testers to see how long each one takes, and to see how many loops and which loops each one identifies as parallelizable.  Ideally, it would be very cool to have my analysis combine the dependence testers in ways for ideal compile-time and loop parallelization checking. </p>
-
-  <h3> New Goals </h3>
-
-<h1> Parallelism Competition Plan </h1>
   <p>
-    What do you plan to show at the parallelism competition? Will it be a demo? Will it be a graph?
+    The ast Python module was learned.  For any singly nested loop, with a single Subscript (i.e. an array or a list), the loop can be determined if it can be parallelized.  The data dependencies of the array accesses are determined using integer linear programming (ILP).  In particular, I have successfully created custom Python ast classes to visit function definitions, assign statements, etc.  I have also used <code> eval </code> and <code> compile </code> Python methods to take parts of the Python AST and compute an expression with its variables set to other values.  This allows solving of the ILPs.  A given variable is able to be set to a particular value by visiting a Name in the AST and seeing if it the variable name we are looking for.  If so, then we be an ast Num there instead with its value as the constant.  The method by which an ILP is solved is by looping over all values the loop variable can be in the Python source program, and computing this expression for each of these values.
   </p>
 
-<img src="roadblock.png"></img>
-<h1>Issues</h1>
-List the issues that concern you the most. Are there any remaining unknowns (things you simply don't know how to solve, or resource you don't know how to get) or is it just a matter of coding and doing the work? If you do not wish to put this information on a public web site you are welcome to email the staff directly.
+  <p>
+    For a simple case, if we have the loop
+    <pre>
+      A = [None]*10
+      for i in range(10):
+          A[i] = A[i-1] # A is known as a Subscript in the Python AST
+    </pre>
+    Then use ILP to determine if there exists integers <code> i, i' </code> such that <code> 0 &lt;= i &lt; 10 </code>, <code> 0 &lt;= i' &lt; 10 </code>, and <code> i-1=i' </code>.  The nine solutions to this ILP are {(i=1,i'=0), (i=2,i'=1), (i=3,i'=2), ...}.  My code is able to extract the read (<code>A[i]</code>) and the write (<code>A[i-1]</code>), and compute the indexing expression by using the aforementioned <code>eval</code> and <code>compile</code> methods in Python across all values of <code>i</code>.
+  </p>
+
+  <p>
+    I've also been able to insert parallelism constructs in Cython code, so after a loop in the Python AST is determined to be parallelizable, it will be able to be annotated with the Cython superset.
+  </p>
+
+<h1> Goals and Deliverables Update </h1>
+
+  <h3> Plan </h3>
+  <p> My project will be able to analyze most Python programs and determine if a given
+  loop can be parallelizable. Array dependence analysis will be performed on the input Python program using different heuristics. After determining which loops are parallelizable, the original Python source will be annotated with the Cython superset to make it parallelizable.  Then, we will see the speedup this autoparallelized Cython code will have over the original Python code.  </p>
+
+  <h3> Nice to Haves </h3>
+  <p> I say most programs will be analyzable now because I am noticing many edge cases in the Python AST that do not seem to be completely necessary in the allotated time I have.  It would be nice if I could implement the parallelization for all constructs in the AST and take care of all edge cases, so I will strive for this.  It will also be nice to have measurements as to how effecient each of the heuristics of determining array dependence analysis.  It would also be nice to be able to split a loop if the whole loop is not parallelizable, but parallelizable if separated (there is a complex analysis for this).  </p>
+
+  <h3> New Goals </h3>
+  <ul>
+    <li> Array dependence analysis (ILP) for a subset of Python </li>
+    <li> Using heuristics for ILP: acyclic test, loop residue, independent variables </li>
+    <li> Supporting nested loops </li>
+    <li> For loops (maybe some while loops) </li>
+    <li> Supporting multiple Subscripts within a loop </li>
+    <li> Annotate Python code with Cython to have parallelized code </li>
+    <li> Compare runtimes of original Python with autoparallelized Cython </li>
+    <li> Support at least two separate sets of vector instrinsics </li>
+  </ul>
+
+<h1> Parallelism Competition Plan </h1>
+  <p> 
+    I will show off a demo.  Some programs with loops will be shown.  My program will run on each of them and show the generated Cython code.  I will explain why certain loops in the Cython code were annotated with parallelism constructs and why other ones were not.  The process can be interactive in that a person can make a quick program with a loop, and my program can analyze it and output the Cython code.  Then we can compare the runtimes of the autoparallelized version and the original version.
+  </p>
+
+
+<h1><img src="roadblock.png"></img>Issues</h1>
+  <p>
+    One possibility is that Cython compiler already compiles to have some parallelism constructs inserted, so my autoparallelism detection would actually just be inserting extra parallelism, which wouldn't do anything, and it might make things worse.  Another issue is that certain loops may be very complicated, and parts of the loop can be parallelized, while other parts cannot be.  So the loop can be split.  This analysis may be a bit complicated to implement correctly.  Mainly though, it comes down to just coding everything up and performing tests.
+  </p>
 
 <p> Copyright &copy; 2017 by Joey Fernau </p>
 </body>
