@@ -1,0 +1,98 @@
+
+<!DOCTYPE html>
+<html>
+<title> Python Automatic Loop Parallelization Checkpoint </title>
+<body>
+<img src="autoparapinkgreen.gif"></img> <br/>
+<a href="../autoparapyllelization.html"> <img src="go_back.gif"></img> </a>
+
+
+<h1> Checkpoint </h1>
+
+<h1> Revised Schedule </h1>
+
+<table style="width:100%">
+
+  <tr>
+    <th>Week Of</th>
+    <th>Todo</th>
+  </tr>
+
+  <tr>
+    <td> Apr 10 </td>
+    <td> Create tests for my program.  Some tests with complicated loop structures and other tests with simple loop structures.  Find general Python test suite also.  Create general code structure of my optimization pass, such as how to read the Python ast and how to annotate the    Cython code. </td>
+  </tr>
+
+  <tr>
+    <td> Apr 17 </td>
+    <td> Perform array dependence analysis on Python AST to determine if a given loop is parallelizable.  Then annotate the Python source     with Cython.  Only implement one array dependence analysis, probably the brute force one. </td>
+  </tr>
+
+  <tr>
+    <td> Apr 24 </td>
+    <td> Finish project checkpoint due on Tuesday, April 25th. Use other dependence testers to conservatively estimate loops that are more    difficult to analyze.  </td>
+  </tr>
+  <tr>
+    <td> Apr 26-29 </td>
+    <td> Implement array dependence analysis for nested loops. </td>
+  </tr>
+
+  <tr>
+    <td> Apr 30-03 </td>
+    <td> Implement array dependence analysis for loops with multiple arrays in them.  Use other dependence testers to conservatively estimate loops that are more difficult to analyze. </td>
+  </tr>
+
+  <tr>
+    <td> May 03-06 </td>
+    <td> Work on tradeoffs between the different dependence testers.  Some may take too long to perform an analysis with while others may be  too conservative.  Maybe find a way to selectively choose which tester to use depending on the complexity of the loop.  </td>
+  </tr>
+
+  <tr>
+    <td> May 07-10 </td>
+    <td> Get final results.  Work on and finish project page by Wednesday, May 10th. </td>
+  </tr>
+
+  <tr>
+    <td> May 10-12 </td>
+    <td> Get more final results.  Work on and finish project presentation and writeup by Friday, May 12th. </td>
+  </tr>
+
+</table>
+
+<h1> Summarized Work-so-far </h1>
+
+The ast Python module was learned.  For any singly nested loop, with a single Subscript (i.e. an array or a list), the loop can be determined if it can be parallelized.  The data dependencies of the array accesses are determined using integer linear programming (ILP).
+
+For a simple case, if we have the loop
+<pre>
+A = [None]*10
+for i in range(10):
+  A[i] = A[i-1]
+</pre>
+Then use ILP to determine if there exists integers <code> i, i' </code> such that <code> 0 &lt;= i &lt; 10 </code>, <code> 0 &lt;= i' &lt; 10 </code>, and <code> i-1=i' </code>
+
+<h1> Goals and Deliverables Update </h1>
+Describe how you are doing with respect to the goals and deliverables stated in your proposal. Do you still believe you will be able to produce all your deliverables? If not, why? What about the "nice to haves"? In your checkpoint writeup we want a new list of goals that you plan to hit for the Parallelism competition.
+
+  <h3> Plan to Achieve </h3>
+
+  <p> I plan to achieve a project that will analyze any given Python program for loops that are parallelizable.  First, it will perform array dependence analysis on the program to determine which loops are parallelizable -- possibly splitting the loops if some computations are dependent on other iterations while other computations are not.  We will get information about the analysis that was performed, which loops were parallelized and why, and how long the analysis took.  It will annotate the input Python source code with Cython if the loop is parallelizable.  These annotations will include both vector instrinsics and OpenMP.  Then, Cython will compile this output to a library binary, which can then be run and we can get speedup performance information from it. </p>
+
+  <h3> Hope to Achieve </h3>
+
+  <p> In addition to the above, it would be cool to support multiple types of vector instrinsics and be platform independent.  Also, it would be great to compare multiple depedence testers to see how long each one takes, and to see how many loops and which loops each one identifies as parallelizable.  Ideally, it would be very cool to have my analysis combine the dependence testers in ways for ideal compile-time and loop parallelization checking. </p>
+
+  <h3> New Goals </h3>
+
+<h1> Parallelism Competition Plan </h1>
+  <p>
+    What do you plan to show at the parallelism competition? Will it be a demo? Will it be a graph?
+  </p>
+
+<img src="roadblock.png"></img>
+<h1>Issues</h1>
+List the issues that concern you the most. Are there any remaining unknowns (things you simply don't know how to solve, or resource you don't know how to get) or is it just a matter of coding and doing the work? If you do not wish to put this information on a public web site you are welcome to email the staff directly.
+
+<p> Copyright &copy; 2017 by Joey Fernau </p>
+</body>
+</html>
