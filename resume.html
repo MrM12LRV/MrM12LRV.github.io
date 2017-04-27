@@ -1,0 +1,59 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <!-- CSS includes -->
+    <link rel="stylesheet" type="text/css" charset="utf-8" href="style.css">
+    <link rel="stylesheet" type="text/css" charset="utf-8" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" charset="utf-8" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+    <!-- JS library includes -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript" charset="utf-8">
+        angular.module('myApplication', [])
+        .controller('myController',
+        function($scope, $http) {
+            $scope.init = function() {
+                $scope.resumeheight = 800;
+                $scope.resumewidth = 800;
+            }
+        });
+    </script>
+</head>
+
+<body class="body-style">
+<div ng-app="myApplication"
+     ng-controller="myController"
+     ng-init="init();">
+
+        <button type="button"
+                class="btn btn-info"
+                data-toggle="collapse"
+                data-target="#resume">
+                Resume
+        </button>
+        <div id="resume">
+            <label for="resumewidth"> Width: </label>
+            <input id="resumewidth"
+                   type="text"
+                   ng-model="resumewidth"/>               <br/>
+            <label for="resumeheight"> Height: </label>
+            <input id="resumeheight"
+                   type="text"
+                   ng-model="resumeheight"/>              <br/>
+            <iframe width="{{resumewidth}}" height="{{resumeheight}}"
+                    type="application/pdf"
+                    name="resumepdf" id="resumepdf"
+                    src="Resume_Joey_Spring_2017__less_.pdf">
+                Your browser does not support iframes.
+            </iframe>
+        </div>
+
+</div>
+<p> Copyright © 2016, 2017 by Joey Fernau </p>
+</body>
+</html>

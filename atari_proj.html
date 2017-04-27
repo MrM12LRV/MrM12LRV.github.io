@@ -1,0 +1,63 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <!-- CSS includes -->
+    <link rel="stylesheet" type="text/css" charset="utf-8" href="style.css">
+    <link rel="stylesheet" type="text/css" charset="utf-8" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" charset="utf-8" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+    <!-- JS library includes -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript" charset="utf-8">
+        angular.module('myApplication', [])
+        .controller('myController',
+        function($scope, $http) {
+            $scope.init = function() {
+                $scope.atariheight = 800;
+                $scope.atariwidth = 800;
+            }
+        });
+    </script>
+</head>
+
+<body class="body-style">
+<div ng-app="myApplication"
+     ng-controller="myController"
+     ng-init="init();">
+
+<div class="row">
+    <div class="col-sm-4">
+        <button type="button"
+                class="btn btn-info"
+                data-toggle="collapse"
+                data-target="#atari7800">
+                3D Graphics on Atari 7800 (Summer 2015)
+        </button>
+        <div id="atari7800">
+            <label for="atariwidth"> Width: </label>
+            <input id="atariwidth"
+                   type="text"
+                   ng-model="atariwidth"/>               <br/>
+            <label for="atariheight"> Height: </label>
+            <input id="atariheight"
+                   type="text"
+                   ng-model="atariheight"/>              <br/>
+            <iframe width="{{atariwidth}}" height="{{atariheight}}"
+                    type="application/pdf"
+                    name="atari7800project" id="atari7800project"
+                    src="3D_Graphics_Atari_7800.pdf">
+                Your browser does not support iframes.
+            </iframe>
+        </div>
+    </div>
+</div> <!-- row for 3D graphics Atari poster -->
+
+</div>
+<p> Copyright © 2016, 2017 by Joey Fernau </p>
+</body>
+</html>
