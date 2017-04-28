@@ -1,0 +1,57 @@
+Socket Based Multiplayer Game
+
+<head>
+<script type="text/javascript" charset="utf-8">
+    function randint(lower, upper) {
+        return lower + Math.floor(Math.random() * (upper - lower))
+    }
+
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    function randchar() {
+        var chars = '';
+        for( var i = 32; i < 127; i++ )
+            chars += String.fromCharCode(i);
+        return chars[randint(0, chars.length)];
+    }
+    function randcolor() {
+        var x = randint(0,255);
+        var y = randint(0,255);
+        var z = randint(0,255);
+        var rand_rgb = "rgb(" + x + "," + y + "," + z + ")";
+        return rand_rgb;
+    }
+
+function flipflop() {
+    var hi = 0;
+    setInterval(function () {
+        var body_nodes = Array.from(document.getElementsByTagName("body"));
+        var body = body_nodes[0];
+
+        if (hi == 0) {
+          body.style.backgroundColor = randcolor(); //"rgb(00,00,00)";
+          hi = 0;
+        } else {
+          body.style.backgroundColor = "rgb(255,255,255)";
+          hi = 0;
+        }
+        }, 2000);
+}
+</script>
+</head>
+
+<body id="mybody" style="background-color: lightblue;" onload="flipflop()">
+<br/>
+<br/>
+
+<a href="https://github.com/joeyfernau/myljo"> Code </a>
+
+<br/>
+<br/>
+
+[[[[[[[[[[[[[[[uNdEr CoNsTrUcTiOn]]]]]]]]]]]]]]]
+
+<p> Copyright &copy; 2016, 2017 by Joey Fernau </p>
+</body>
