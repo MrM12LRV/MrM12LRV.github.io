@@ -1,0 +1,35 @@
+
+.body-style {
+    color:#F660AB;
+    background-color:black;
+    font-family: Verdana, Geneva, sans-serif;
+}
+
+.embedded-style {
+    color:white;
+    background-color:black;
+}
+
+label {
+    display: inline-block; /* Align labels */
+    width: 100px;
+    text-align: right;
+}
+
+/* to center an inline element */
+.text-center {
+   text-align:center
+}
+
+/* Fixed width and height for tables */
+tbody {
+    height:500px;
+    width:500px;
+    display:block;
+    overflow:auto;
+}
+thead, tbody tr {
+    display:table;
+    width:100%;
+    table-layout:fixed;
+}

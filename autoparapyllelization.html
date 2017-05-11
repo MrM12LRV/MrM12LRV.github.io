@@ -1,15 +1,224 @@
 
 <!DOCTYPE html>
 <html>
-<title> Python Automatic Loop Parallelization </title>
-<body>
-<img src="autoparapyllelization/autoparapinkgreen.gif"></img>
-<h1> Python Automatic Loop Parallelization </h1>
-<h2> Joey Fernau                           </h2>
 
-<a href="autoparapyllelization/apyl_prop.html">Proposal</a> <br/>
-<a href="autoparapyllelization/apyl_checkpoint.html">Checkpoint</a><img src="https://www.cs.cmu.edu/~410/img/new.gif"></img>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
-<div><p> Copyright &copy; 2017 by Joey Fernau </p> </div>
+    <!-- CSS includes -->
+    <link rel="stylesheet" type="text/css" charset="utf-8" href="autoparapyllelization/style.css">
+    <link rel="stylesheet" type="text/css" charset="utf-8" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" charset="utf-8" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+    <!-- JS library includes -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript" charset="utf-8">
+        angular.module('myApplication', [])
+        .controller('myController',
+        function($scope, $http) {
+            $scope.init = function() {
+                $scope.herbwidth = 800;
+                $scope.herbheight = 800;
+                $scope.atariheight = 800;
+                $scope.atariwidth = 800;
+                $scope.resumeheight = 800;
+                $scope.resumewidth = 800;
+                $scope.videoheight = 360;
+                $scope.videowidth = 640;
+            }
+        });
+
+    // Fun stuff
+    function randint(lower, upper) {
+        return lower + Math.floor(Math.random() * (upper - lower))
+    }
+
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    function randchar() {
+        var chars = '';
+        for( var i = 32; i < 127; i++ )
+            chars += String.fromCharCode(i);
+        return chars[randint(0, chars.length)];
+    }
+    function randcolor() {
+        var x = randint(0,255);
+        var y = randint(0,255);
+        var z = randint(0,255);
+        var rand_rgb = "rgb(" + x + "," + y + "," + z + ")";
+        return rand_rgb;
+    }
+
+    function corruption_img() {
+        var img = document.getElementById('meimg');
+        img.setAttribute('crossOrigin', '');
+        var canvas = document.createElement('canvas');
+        canvas.width = img.width;
+        canvas.height = img.height;
+        ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, img.width, img.height);
+        console.log(canvas);
+        //var pixels = ctx.getImageData();
+        //console.log(pixels);
+
+        ctx.fillStyle="red";
+        ctx.fillRect(10,10,50,50);
+
+        function copy()
+        {
+        var imgData=ctx.getImageData(10,10,50,50);
+        ctx.putImageData(imgData,10,70);
+        }
+        sleep(200);
+        copy();
+    }
+
+    function corruption_fun() {
+        var total_total_edits = 10;
+        var max_time_before_next_edit = 10000;
+        setInterval(function () {
+            var total_edits = 0;
+            setInterval(function () {
+                if (total_edits > total_total_edits) return;
+                var p_nodes = Array.from(document.getElementsByTagName("p"));
+                var a_nodes = Array.from(document.getElementsByTagName("a"));
+                var h1_nodes = Array.from(document.getElementsByTagName("h1"));
+                var h2_nodes = Array.from(document.getElementsByTagName("h2"));
+                var h3_nodes = Array.from(document.getElementsByTagName("h3"));
+                var h4_nodes = Array.from(document.getElementsByTagName("h4"));
+                var i_nodes = Array.from(document.getElementsByTagName("i"));
+
+                var all_nodes = p_nodes.concat(a_nodes, h1_nodes, h2_nodes, h3_nodes, h4_nodes, i_nodes);
+                //var all_nodes = i_nodes;
+
+                var ridx = randint(0, all_nodes.length);
+                var rand_node = all_nodes[ridx];
+
+                if (rand_node.id == "logo" || rand_node.id == "copyright")
+                    return;
+                if (rand_node.id == "ilogo") {
+                    var rand_c = randcolor();
+                    rand_node.style.color = rand_c;
+                    return;
+                }
+
+                var text = rand_node.innerHTML;
+                var txt_len = text.length;
+                var rand_idx = randint(0, txt_len);
+
+                var first_half = text.substring(0,rand_idx);
+                var second_half = text.substring(rand_idx+1,txt_len);
+
+                rand_node.innerHTML = first_half + randchar() + second_half;
+                total_edits++;
+            }, randint(10, max_time_before_next_edit));
+
+            // Add more corruption next time 'round
+            max_time_before_next_edit -= 500;
+            if (max_time_before_next_edit <= 10) max_time_before_next_edit = 11;
+            total_total_edits += 5;
+
+        }, 20000);
+    }
+    </script>
+
+</head>
+
+<body class="body-style" onload="corruption_fun();corruption_img();">
+<div ng-app="myApplication"
+     ng-controller="myController"
+     ng-init="init();corruption_fun();">
+    <div class="">
+
+        <br/>
+
+    </div>
+
+    <div class="container">
+        <div class="row">
+          <div class="col-lg-4">
+            <img src="autoparapyllelization/autoparapinkgreen.gif"></img>
+            <h1> Python Automatic Loop Parallelization </h1>
+            <h2> Joey Fernau </h2>
+          </div>
+          <div class="col-lg-4">
+          </div>
+          <div class="col-lg-4">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-4">
+            <a href="autoparapyllelization/apyl_prop.html">Proposal</a>
+          </div>
+          <div class="col-sm-4">
+            <a href="autoparapyllelization/apyl_checkpoint.html">Checkpoint</a><img src="https://www.cs.cmu.edu/~410/img/new.gif"></img>
+          </div>
+          <div class="col-sm-4">
+          <br/>
+          </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-8">
+          </div>
+          <div class="col-sm-8">
+            Apply <i> array dependence analysis </i> on some loops, and detect if they can be parallelized!
+          </div>
+          <div class="col-sm-8"> <br/>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-4">
+            <img src="autoparapyllelization/example2.png"></img>
+          </div>
+          <div class="col-sm-4"> <br/>
+            => <img src="autoparapyllelization/example1.png"></img>
+          </div>
+          <div class="col-sm-4">
+          </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-8">
+          </div>
+          <div class="col-sm-8">
+            Take a parallelizable loop, and autoannotate it with the Cython superset!
+          </div>
+          <div class="col-sm-8"> <br/>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-3">
+            <img src="autoparapyllelization/origloop.png"></img>
+          </div>
+          <div class="col-sm-3"> <br/>
+            => <img src="autoparapyllelization/parloop.png"></img>
+
+          </div>
+          <div class="col-sm-2">
+          </div>
+        </div>
+
+        <br/>
+        <div class="row">
+            <p id="copyright"> Copyright © 2016, 2017 by Joey Fernau </p>
+        </div>
+    </div>
+</div>
 </body>
+
 </html>
+
