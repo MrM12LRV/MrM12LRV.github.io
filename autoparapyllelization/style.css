@@ -10,6 +10,21 @@
     background-color:black;
 }
 
+.ngreen {
+    color:#83F52C;
+}
+.white {
+    color:white;
+}
+
+.cyan {
+    color:cyan;
+}
+
+.purple {
+    color:#9932CD;
+}
+
 label {
     display: inline-block; /* Align labels */
     width: 100px;

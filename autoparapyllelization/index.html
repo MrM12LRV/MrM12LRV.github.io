@@ -123,17 +123,16 @@
             max_time_before_next_edit -= 500;
             if (max_time_before_next_edit <= 10) max_time_before_next_edit = 11;
             total_total_edits += 5;
-
         }, 20000);
     }
     </script>
 
 </head>
 
-<body class="body-style" onload="corruption_fun();corruption_img();">
+<body class="body-style" onload="/*corruption_fun();corruption_img();*/">
 <div ng-app="myApplication"
      ng-controller="myController"
-     ng-init="init();corruption_fun();">
+     ng-init="">
     <div class="">
 
         <br/>
@@ -158,7 +157,7 @@
             <a href="apyl_prop.html">Proposal</a>
           </div>
           <div class="col-sm-4">
-            <a href="apyl_checkpoint.html">Checkpoint</a><img src="https://www.cs.cmu.edu/~410/img/new.gif"></img>
+            <a href="apyl_checkpoint.html">Checkpoint</a><!--<img src="https://www.cs.cmu.edu/~410/img/new.gif"></img>-->
           </div>
           <div class="col-sm-4">
           <br/>
@@ -166,6 +165,127 @@
         </div>
 
         <hr>
+
+        <div class="row">
+          <h2 class="cyan"> Summary </h2>
+          <p> Implemented array dependence analysis for Python by utilzing the functionality provided by Cython, a typed superset of Python that compiles to C, in order to perform automatic loop parallelization. The parallel system used is OpenMP -- run on a CPU with 4 logical cores. </p>
+        </div>
+
+
+        <hr>
+
+
+        <div class="row">
+          <h2 class="cyan"> Background </h2>
+        </div>
+
+        <div class="row">
+          This system performs <i>array dependence analysis</i> on for loops in order to determine if loop has independent iterations.  It requires solving an integer linear program.
+        </div>
+        <div class="row">
+          <h3> Key Data Structures </h3>
+            <div class="col-sm-8">
+              <h4> An Array Access </h4>
+                <img src="array_access.png"></img>
+                <p> Represents an access into an array.  In the above example, <i> A </i> is the array, being indexed by the expression <i> i+99 </i>.  It is an array READ at line 21 of the program.  The loop <i>Iterators</i> it depends on are <i> ITER{0, i:[0,100,1]}</i> and <i> ITER{1, j:[0,100,1]}</i>. </p>
+            </div>
+            <div class="col-sm-8">
+              <h4> An Iterator </h4>
+                <img src="iterator.png"></img>
+                <p> Represents the loop variable of the loop.  In the above, <i> j </i> is a loop variable that ranges from [0,100) in the loop at depth 1. </p>
+            </div>
+        </div> <!-- row -->
+
+        <div class="row">
+          <div class="col-sm-8">
+            <img src="keydatastructures.png" style="max-width:100%;"></img>
+          </div>
+        </div>
+        <div class="row">
+          <h3> Key Operations </h3>
+            <p>Setting fields to obtain more information about the program, so as to perform <i>array dependence analysis</i>.</p>
+        </div>
+        <div class="row">
+          <h3> Inputs and Outputs </h3>
+          <div class="col-sm-8">
+            <div class="row">
+            <span class="white">Input</span>: Python program (with loops)
+            </div>
+            <div class="row">
+            <img src="origcode.png"></img>
+            </div>
+          </div>
+          <div class="col-sm-8">
+            <div class="row">
+            <span class="white">Output</span>: Python program (with loops parallelized) [ if they can be ]
+            </div>
+            <div class="row">
+            <img src="cythoncode.png"></img>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <h3> Dependencies </h3>
+          <p> Data Dependent Accesses </p>
+          <p><u class="white">parallelizable loop</u>- one with no data dependent array Accesses across iterations </p>
+          <p>two Accesses are <u class="white">data dependent</u> if at least one is a write and there exists an array Access of one that matches the other’s when considering all iterations</p>
+        </div>
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="row">
+              <img src="datadepex.png"></img>
+            </div>
+            <div class="row">
+              <p class="white">Data Dependent</p>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="row">
+              <img src="dataindepex.png"></img>
+            </div>
+            <div class="row">
+              <p class="white">Data Independent</p>
+            </div>
+          </div>
+        </div>
+
+
+
+        <hr>
+
+
+
+        <div class="row">
+          <h2 class="cyan"> Approach </h2>
+        </div>
+
+        <div class="row">
+          <h3> Technologies </h3>
+          <p>Python, python ast module, Cython, any machine target</p>
+        </div>
+
+        <div class="row">
+          <h3> Existing Code </h3>
+          <p>The unparser.py was a file to go from an abstract syntax tree back to Python source code.  Now, in its modified state, it goes to a form needed when loops are translated to parallel OpenMP Cython. </p>
+        </div>
+
+
+        <div class="row">
+          <h3> System Overview </h3>
+          <img src="systemdiagram.png"></img>
+          <p> Given Python Source, the Loop Information Extractor uses the Python ast module (Abstract Syntax Tree).  Access objects (described above) are created by analyzing the nested loop structure of all loops.  These access objects are then passed into the Array Dependence Analysis, which uses integer linear programming to determine if there exists two accesses (where at least one is a write) that conflict.  The loops that can be run in parallel are then the output and given to Parallel Cython Code Generator, which outputs Cython code, annotated with OpenMP. </p>
+        </div>
+
+
+
+
+        <hr>
+
+
+
+        <div class="row">
+          <h2 class="cyan"> Results </h2>
+        </div>
 
         <div class="row">
           <div class="col-sm-8">
@@ -188,8 +308,6 @@
           </div>
         </div>
 
-        <hr>
-
         <div class="row">
           <div class="col-sm-8">
           </div>
@@ -211,6 +329,15 @@
           <div class="col-sm-2">
           </div>
         </div>
+
+
+        <hr>
+
+
+        <div class="row">
+          <h2 class="cyan"> References </h2>
+        </div>
+        <h4 class="purple"> Purple Dragon Book: Alfred V. Aho, Monica S. Lam, Ravi Sethi, and Jeffrey D. Ullman. Compilers: Principles, Techniques, and Tools (2nd Edition). Pearson Addison Wesley, 2006. ISBN: 978-0321486814. </h4>
 
         <hr>
 
